@@ -2,17 +2,12 @@
 IF NOT EXIST "X:\Windows\System32\Config\System" REG QUERY "HKU\S-1-5-19" >NUL 2>&1
 IF NOT %ERRORLEVEL% EQU 0 powershell.exe -windowstyle hidden -noprofile "Start-Process '%~dpnx0' -Verb RunAs" 2>NUL&EXIT
 
-if /i %PROCESSOR_IDENTIFIER:~0,3%==x86 (
+
 rem 正在释放核心驱动文件
-echo y|copy Drivers\x32\usysdiag.exe "%~dp0\" >NUL 2>NUL
-echo y|copy Drivers\x32\sysdiag.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
-echo y|copy Drivers\x32\hrwfpdrv.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
-) else (
-rem 正在释放核心驱动文件...
-echo y|copy Drivers\x64\usysdiag.exe "%~dp0\" >NUL 2>NUL
-echo y|copy Drivers\x64\sysdiag.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
-echo y|copy Drivers\x64\hrwfpdrv.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
-)
+echo y|copy Drivers\usysdiag.exe "%~dp0\" >NUL 2>NUL
+echo y|copy Drivers\sysdiag.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
+echo y|copy Drivers\hrwfpdrv.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
+
 
 rem 正在创建系统服务项目...
 sc create hrwfpdrv binpath= "%WinDir%\System32\drivers\hrwfpdrv.sys" type= kernel start= demand error= normal >NUL 2>NUL
