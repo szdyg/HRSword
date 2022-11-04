@@ -1,10 +1,11 @@
+%1 mshta vbscript:CreateObject("Shell.Application").ShellExecute("cmd.exe","/c %~s0 ::","","runas",1)(window.close)&&exit
+
 @ECHO OFF & PUSHD "%~DP0" && CD /D "%~DP0"
 IF NOT EXIST "X:\Windows\System32\Config\System" REG QUERY "HKU\S-1-5-19" >NUL 2>&1
 IF NOT %ERRORLEVEL% EQU 0 powershell.exe -windowstyle hidden -noprofile "Start-Process '%~dpnx0' -Verb RunAs" 2>NUL&EXIT
 
 
 rem 正在释放核心驱动文件
-echo y|copy Drivers\usysdiag.exe "%~dp0\" >NUL 2>NUL
 echo y|copy Drivers\sysdiag.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
 echo y|copy Drivers\hrwfpdrv.sys "%WinDir%\System32\drivers\" >NUL 2>NUL
 
